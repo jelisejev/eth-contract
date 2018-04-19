@@ -1,0 +1,12 @@
+version: '3'
+services:
+  ethcontract:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./build:/home/build
+      - ./contracts:/home/contracts
+      - ./migrations:/home/migrations
+      - ./test:/home/test
+      - ./truffle.js:/home/truffle.js
