@@ -4,7 +4,7 @@ contract SimpleStorage {
     uint storedData;
 
     function set(uint x) public {
-        storedData = x * 2;
+        storedData = x;
     }
 
     function get() public constant returns (uint) {
