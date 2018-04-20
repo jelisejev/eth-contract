@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-truffle compile
+solium -d contracts && truffle compile

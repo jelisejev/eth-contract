@@ -11,3 +11,5 @@ services:
       - ./scripts:/home/scripts
       - ./test:/home/test
       - ./truffle.js:/home/truffle.js
+      - ./.soliumignore:/home/.soliumignore
+      - ./.soliumrc.json:/home/.soliumrc.json
