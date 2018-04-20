@@ -8,5 +8,6 @@ services:
       - ./build:/home/build
       - ./contracts:/home/contracts
       - ./migrations:/home/migrations
+      - ./scripts:/home/scripts
       - ./test:/home/test
       - ./truffle.js:/home/truffle.js
