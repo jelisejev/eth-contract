@@ -13,6 +13,7 @@ contract Spread {
     }
 
     function addRecepient(address recepient) public {
+        require(msg.sender == owner);
         recepients.push(recepient);
     }
 
