@@ -8,4 +8,4 @@ WORKDIR /home
 
 RUN npm i -g truffle@4.1.7 solium@1.1.6 chokidar-cli@1.2.0
 
-CMD ["chokidar", "**/*.sol", "-c", "./scripts/build.sh"]
+ENTRYPOINT ["./scripts/watch.sh"]

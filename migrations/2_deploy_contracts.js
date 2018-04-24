@@ -1,5 +1,5 @@
-var SpreadContract = artifacts.require("./SpreadContract.sol");
+var Spread = artifacts.require("./Spread.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(SpreadContract);
+  deployer.deploy(Spread);
 };
