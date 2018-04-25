@@ -14,6 +14,7 @@ contract Spread {
 
     function () public payable {
         require(msg.value >= 1 * 100 / fee);
+        require(recepients.length > 0);
 
         uint feeAmount = msg.value * fee / 100;
         feesAddress.transfer(feeAmount);

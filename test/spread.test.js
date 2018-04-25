@@ -27,6 +27,30 @@ contract('Spread', (accounts) => {
     expect(e).not.equal(undefined);
   });
 
+  it('should transfer the fees to a different account', async () => {
+    const initialBalance = web3.eth.getBalance(feesAccount);
+    await c.addRecepient('0x5c937978f2fabf0c08a1fd8bdd2155c938d78061');
+    await c.sendTransaction({
+      from: accounts[1],
+      value: 60
+    });
+    const balance = web3.eth.getBalance(feesAccount);
+    expect(balance.minus(initialBalance).toNumber()).to.equal(6);
+  });
+
+  it('should fail if there are no recepients', async () => {
+    let e;
+    try {
+      await c.sendTransaction({
+        from: accounts[1],
+        value: 60
+      });
+    } catch(error) {
+      e = error;
+    }
+    expect(e).not.equal(undefined);
+  });
+
   it('should spread the send ether between the recepient accounts', async () => {
     const balance1 = web3.eth.getBalance(recepient1);
     const balance2 = web3.eth.getBalance(recepient2);
