@@ -21,4 +21,22 @@ contract('Spread', (accounts) => {
     }
     expect(e).not.equal(undefined);
   });
+
+  it('should accept incoming ether', async () => {
+    await c.sendTransaction({
+      from: accounts[1],
+      value: 60
+    });
+    const balance = await c.getBalance.call();
+    expect(balance.toNumber()).to.equal(60);
+  });
+
+  it('should allocate part of the incoming ether to its own account', async () => {
+    await c.sendTransaction({
+      from: accounts[1],
+      value: 60
+    });
+    const balance = await c.getOwnBalance.call();
+    expect(balance.toNumber()).to.equal(6);
+  })
 });
