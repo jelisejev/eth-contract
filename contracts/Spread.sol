@@ -13,7 +13,7 @@ contract Spread {
     }
 
     function () public payable {
-        // @todo: require a minimum of 10 wei
+        require(msg.value >= 1 / 0.1);
         // @todo: define rate when creating the contract
         ownBalance += msg.value / (1 / 0.1);
     }

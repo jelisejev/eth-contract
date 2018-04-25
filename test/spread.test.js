@@ -39,4 +39,19 @@ contract('Spread', (accounts) => {
     const balance = await c.getOwnBalance.call();
     expect(balance.toNumber()).to.equal(6);
   })
+
+  it('should have a minimum amount of wei it accepts', async () => {
+    let e;
+    try {
+      await c.sendTransaction({
+        from: accounts[1],
+        value: 6
+      });
+    } catch(error) {
+      e = error;
+    }
+    expect(e).not.equal(undefined);
+    const balance = await c.getOwnBalance.call();
+    expect(balance.toNumber()).to.equal(0);
+  })
 });
