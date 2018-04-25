@@ -1,8 +1,5 @@
 pragma solidity ^0.4.2;
 
-// @todo: keep part of the ether on the contracts balance
-// @todo: allow to widthdraw balance
-// @todo: use contracts as recepients
 contract Spread {
     address[] public recepients;
     address owner;
@@ -20,6 +17,16 @@ contract Spread {
 
         uint feeAmount = msg.value * fee / 100;
         feesAddress.transfer(feeAmount);
+
+        spread(msg.value - feeAmount);
+    }
+
+    function spread(uint amount) private {
+        uint amountPerRecepient = amount / recepients.length;
+
+        for (uint i = 0; i < recepients.length; i++) {
+            recepients[i].transfer(amountPerRecepient);
+        }
     }
 
     function addRecepient(address recepient) public {
