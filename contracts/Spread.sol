@@ -6,19 +6,20 @@ pragma solidity ^0.4.2;
 contract Spread {
     address[] public recepients;
     address owner;
-    uint comission;
+    uint fee;
+    address feesAddress;
 
-    // @todo: move own balance to a separate contract
-    uint ownBalance = 0;
-
-    constructor(uint _comission) public {
+    constructor(uint _fee, address _feesAddress) public {
         owner = msg.sender;
-        comission = _comission;
+        fee = _fee;
+        feesAddress = _feesAddress;
     }
 
     function () public payable {
-        require(msg.value >= 1 * 100 / comission);
-        ownBalance += msg.value * comission / 100;
+        require(msg.value >= 1 * 100 / fee);
+
+        uint feeAmount = msg.value * fee / 100;
+        feesAddress.transfer(feeAmount);
     }
 
     function addRecepient(address recepient) public {
@@ -32,10 +33,6 @@ contract Spread {
 
     function getBalance() public view returns (uint) {
         return address(this).balance;
-    }
-
-    function getOwnBalance() public view returns (uint) {
-        return ownBalance;
     }
 }
 

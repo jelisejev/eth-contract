@@ -2,8 +2,9 @@ const Spread = artifacts.require('Spread');
 
 contract('Spread', (accounts) => {
   let c;
+  let feesAccount = accounts[9];
   beforeEach(async () => {
-    c = await Spread.new([10], {from: accounts[0]});
+    c = await Spread.new(10, feesAccount, {from: accounts[0]});
   });
 
   it('should allow to add new addresses', async () => {
@@ -22,23 +23,15 @@ contract('Spread', (accounts) => {
     expect(e).not.equal(undefined);
   });
 
-  it('should accept incoming ether', async () => {
+  it('should transfer the fees to a different account', async () => {
+    const initialBalance = web3.eth.getBalance(feesAccount);
     await c.sendTransaction({
       from: accounts[1],
       value: 60
     });
-    const balance = await c.getBalance.call();
-    expect(balance.toNumber()).to.equal(60);
+    const balance = web3.eth.getBalance(feesAccount);
+    expect(balance.minus(initialBalance).toNumber()).to.equal(6);
   });
-
-  it('should allocate part of the incoming ether to its own account', async () => {
-    await c.sendTransaction({
-      from: accounts[1],
-      value: 60
-    });
-    const balance = await c.getOwnBalance.call();
-    expect(balance.toNumber()).to.equal(6);
-  })
 
   it('should have a minimum amount of wei it accepts', async () => {
     let e;
@@ -51,7 +44,5 @@ contract('Spread', (accounts) => {
       e = error;
     }
     expect(e).not.equal(undefined);
-    const balance = await c.getOwnBalance.call();
-    expect(balance.toNumber()).to.equal(0);
   })
 });
