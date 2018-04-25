@@ -6,16 +6,19 @@ pragma solidity ^0.4.2;
 contract Spread {
     address[] public recepients;
     address owner;
+    uint comission;
+
+    // @todo: move own balance to a separate contract
     uint ownBalance = 0;
 
-    constructor() public {
+    constructor(uint _comission) public {
         owner = msg.sender;
+        comission = _comission;
     }
 
     function () public payable {
-        require(msg.value >= 1 / 0.1);
-        // @todo: define rate when creating the contract
-        ownBalance += msg.value / (1 / 0.1);
+        require(msg.value >= 1 * 100 / comission);
+        ownBalance += msg.value * comission / 100;
     }
 
     function addRecepient(address recepient) public {

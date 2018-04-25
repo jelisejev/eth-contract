@@ -3,7 +3,7 @@ const Spread = artifacts.require('Spread');
 contract('Spread', (accounts) => {
   let c;
   beforeEach(async () => {
-    c = await Spread.new({from: accounts[0]});
+    c = await Spread.new([10], {from: accounts[0]});
   });
 
   it('should allow to add new addresses', async () => {
